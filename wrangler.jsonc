@@ -1,0 +1,8 @@
+{
+  "name": "daejeon-jungang-market-guide",
+  "compatibility_date": "2026-08-24",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
