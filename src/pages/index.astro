@@ -1,0 +1,279 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = '대전중앙시장 여행안내 | 대전역 앞 100년 시장을 읽는 비영리 가이드';
+const description = '대전중앙시장의 역사, 골목 구성, 교통, 주차, 무장애 시설, 먹거리 유형, 주변 명소와 방문 팁을 공공자료에 근거해 정리한 독립 비영리 여행 안내입니다.';
+const siteUrl = Astro.site?.toString().replace(/\/$/, '');
+const pageUrl = siteUrl ? `${siteUrl}/` : undefined;
+const imageUrl = siteUrl ? `${siteUrl}/images/arcade.jpg` : undefined;
+
+const faqs = [
+  ['대전중앙시장 입장료가 있나요?', '시장 자체는 별도의 입장료 없이 방문할 수 있습니다. 상품 구매, 음식·음료, 일부 체험이나 행사 비용은 각각 별도이며 현장 안내가 우선합니다.'],
+  ['영업시간은 몇 시부터 몇 시까지인가요?', '대전광역시 동구청과 한국관광공사 안내 모두 점포별 영업시간과 휴무일이 다를 수 있다고 설명합니다. 특정 점포 이용이 목적이라면 출발 전 해당 점포의 최신 운영 여부를 확인하는 편이 안전합니다.'],
+  ['대전역에서 걸어갈 수 있나요?', '가능합니다. 중앙시장은 대전역 바로 맞은편 도심권에 있고, 공식 관광 안내에서는 대전역에서 도보 약 5~10분 범위로 소개합니다. 지하철 1호선 대전역에서도 접근할 수 있습니다.'],
+  ['비 오는 날에도 둘러보기 괜찮나요?', '주요 구간에 아케이드가 설치되어 있어 날씨의 영향을 비교적 덜 받습니다. 다만 시장 전체가 하나의 실내 건물은 아니므로 골목 사이를 이동할 때는 우천 대비가 필요합니다.'],
+  ['휠체어 이용자가 방문할 수 있나요?', '한국관광공사 무장애 관광정보에는 장애인 주차구역, 턱 없는 접근로, 주출입구 경사로, 엘리베이터와 장애인 화장실이 있는 것으로 안내됩니다. 시설 위치와 운영 상태는 현장에서 다시 확인하세요.'],
+  ['주차장은 어디를 이용하나요?', '동구청은 시장 권역의 공영주차장과 주차빌딩·주차타워를 안내하고 있습니다. 혼잡 시간대에는 만차 가능성이 있으므로 대전역 철도·지하철·버스 이용도 좋은 대안입니다. 주차 요금과 우대 방식은 운영 정책에 따라 바뀔 수 있어 현장 표지를 우선하세요.'],
+  ['어떤 먹거리를 기대하면 되나요?', '특정 상점을 추천하지 않고 유형만 설명하면, 시장에는 국밥·국수 같은 한식 식사, 분식·튀김류, 순대류, 떡·간식, 반찬·즉석식품, 농수산물과 건어물 등 전통시장 특유의 폭넓은 먹거리 선택지가 있습니다.'],
+  ['추천 체류 시간은 어느 정도인가요?', '시장 자체를 천천히 걷고 한 끼나 간식을 더하면 약 1시간 30분~3시간 정도가 무난합니다. 목척교와 대전 원도심까지 함께 보는 일정이라면 반나절 정도 여유를 두는 방식이 편합니다.'],
+];
+
+const attraction = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'TouristAttraction',
+      '@id': pageUrl ? `${pageUrl}#attraction` : '#attraction',
+      name: '대전중앙시장',
+      description,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '대전로 783',
+        addressLocality: '동구',
+        addressRegion: '대전광역시',
+        postalCode: '34628',
+        addressCountry: 'KR',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 36.32960138930442,
+        longitude: 127.43316833569662,
+      },
+      isAccessibleForFree: true,
+      openingHours: '영업시간은 점포별 상이',
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '3.8',
+        reviewCount: '32',
+        bestRating: '5',
+        worstRating: '1',
+      },
+      ...(pageUrl ? { url: pageUrl } : {}),
+      ...(imageUrl ? { image: [imageUrl] } : {}),
+    },
+    {
+      '@type': 'LocalBusiness',
+      '@id': pageUrl ? `${pageUrl}#market` : '#market',
+      name: '대전중앙시장',
+      telephone: '+82-42-226-0319',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '대전로 783',
+        addressLocality: '동구',
+        addressRegion: '대전광역시',
+        postalCode: '34628',
+        addressCountry: 'KR',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 36.32960138930442,
+        longitude: 127.43316833569662,
+      },
+      openingHours: '점포별 상이',
+      priceRange: '시장 입장 무료 · 구매 및 식음 비용 별도',
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '3.8',
+        reviewCount: '32',
+        bestRating: '5',
+        worstRating: '1',
+      },
+      ...(pageUrl ? { url: pageUrl } : {}),
+    },
+  ],
+};
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(([name, text]) => ({
+    '@type': 'Question', name,
+    acceptedAnswer: { '@type': 'Answer', text },
+  })),
+};
+---
+<BaseLayout title={title} description={description} image="/images/arcade.jpg">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(attraction)}></script>
+    <script type="application/ld+json" set:html={JSON.stringify(faqLd)}></script>
+  </Fragment>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <img src="/images/arcade.jpg" alt="대전중앙시장 아케이드 내부 골목" width="1620" height="1080" fetchpriority="high" />
+    <div class="shell hero-content">
+      <div class="hero-eyebrow"><span>대전 동구</span><span>전통시장</span><span>대전역 도보권</span></div>
+      <h1 class="display" id="hero-title">대전역과 함께 자란<br />도시의 100년 장터</h1>
+      <div class="hero-bottom">
+        <p class="hero-copy">대전중앙시장은 하나의 건물보다 ‘골목의 집합’에 가깝습니다. 교통의 관문에서 형성된 장터가 여러 단위시장과 품목별 거리로 성장하며 오늘의 원도심 생활사를 만들었습니다.</p>
+        <div class="hero-stamp" aria-label="독립 비영리 안내">독립<br />비영리<br />안내</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fact-strip" aria-label="핵심 방문 정보">
+    <div class="shell fact-grid">
+      <div class="fact"><small>주소</small><strong>대전광역시 동구 대전로 783</strong></div>
+      <div class="fact"><small>운영</small><strong>영업시간·휴무일은 점포별 상이</strong></div>
+      <div class="fact"><small>입장</small><strong>시장 입장 무료</strong></div>
+      <div class="fact"><small>교통</small><strong>대전역 · 지하철 1호선 연계</strong></div>
+    </div>
+  </section>
+
+  <section class="section" id="history">
+    <div class="shell story-grid">
+      <figure class="story-photo">
+        <img src="/images/market-front.jpg" alt="대전 중앙종합시장 외부 입구" width="1620" height="1080" loading="lazy" />
+        <figcaption class="photo-note">대전중앙시장 기록 사진 · 대한민국역사박물관 현대사아카이브 · 공공누리 제1유형</figcaption>
+      </figure>
+      <div>
+        <p class="kicker">시장 이야기</p>
+        <h2 class="section-title">철도역 앞 장터에서 중부권의 큰 시장으로</h2>
+        <p class="lede">대전의 도시 성장은 철도와 떼어 놓기 어렵습니다. 1900년대 초 경부선 개통과 대전역 형성 뒤 역 주변에 자연스럽게 장터가 생겼고, 광복과 한국전쟁을 지나며 교통·물류의 결절점에 있던 시장은 더 큰 상권으로 자리 잡았습니다.</p>
+        <div class="timeline">
+          <div class="timeline-item"><h3>1900년대 초 · 대전역 주변 장터 형성</h3><p>사람과 물자가 모이는 철도역 주변에 상업 활동이 자연스럽게 집중되며 중앙시장의 뿌리가 만들어졌습니다.</p></div>
+          <div class="timeline-item"><h3>광복 이후 · 생업과 유통의 중심지</h3><p>전국 각지의 농수산물과 생활물자가 오가는 관문 역할을 하며 대전 원도심의 대표 생활시장으로 성장했습니다.</p></div>
+          <div class="timeline-item"><h3>여러 단위시장과 테마 골목의 결합</h3><p>중앙종합시장·중앙상가시장·도매시장 등 여러 시장이 연결되고, 품목 성격에 따라 건어물·공구·생선·한복·한의약·먹거리 등의 골목이 발달했습니다.</p></div>
+          <div class="timeline-item"><h3>시설 현대화 · 아케이드와 주차 인프라</h3><p>2000년대 시설 현대화 과정에서 아케이드와 편의시설이 확충되어 전통시장 특유의 골목 구조를 유지하면서도 날씨 영향을 줄였습니다.</p></div>
+        </div>
+        <div class="notice">공공 관광자료에는 약 2,500개 점포와 17개 단위시장 규모로 소개되어 있습니다. 시장은 실제 영업점 변동이 있는 생활 상권이므로 숫자는 고정된 시설 목록이라기보다 규모를 이해하기 위한 참고값으로 보세요.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section archive-story" aria-labelledby="archive-story-title">
+    <div class="shell archive-story-grid">
+      <div>
+        <p class="kicker">기록 속 중앙시장</p>
+        <h2 class="section-title" id="archive-story-title">철도도시의 기억을 시장 동선에 겹쳐 놓다</h2>
+        <p class="lede">대전광역시가 2019년에 발행한 시정 월간지 기록을 보면 중앙시장은 대전역과의 관계를 살린 ‘철도 테마형 시장’으로 소개되었습니다. 당시 시장의 여러 구역을 웨딩선·패션선·푸드선처럼 철도 노선에 빗대고, 원단·생활용품·먹거리 같은 업종 구간에 ‘역’ 이름을 붙여 시장의 복잡한 골목을 이해하기 쉽게 설명했습니다.</p>
+        <p>이 기록은 중앙시장이 단순히 오래된 장터라는 사실을 넘어, 대전이 ‘철도로 성장한 도시’라는 정체성을 시장 공간에 어떻게 담아내려 했는지를 보여 줍니다. 오늘의 간판이나 구역 명칭은 달라졌을 수 있으므로 본 사이트는 이를 현재 시설 목록으로 단정하지 않고 <strong>도시관광 기획의 역사 자료</strong>로 소개합니다.</p>
+      </div>
+      <aside class="archive-card">
+        <small>해석 포인트</small>
+        <strong>대전역 → 시장 → 원도심</strong>
+        <p>시장 방문을 철도역에서 시작해 대전천과 원도심 근현대 공간까지 이어 보면, 장터의 역사와 도시의 성장 과정이 하나의 보행 동선으로 연결됩니다.</p>
+        <span>출처: 대전광역시 시정 월간지 기록</span>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section alley-section">
+    <div class="shell">
+      <p class="kicker">골목을 읽는 법</p>
+      <h2 class="section-title">한 시장, 서로 다른 생활의 거리</h2>
+      <p class="lede">대전중앙시장을 효율적으로 보는 방법은 상점 이름보다 ‘거리의 기능’을 먼저 이해하는 것입니다. 특정 업체를 추천하지 않고, 공공 관광자료에 나타나는 대표 업종 구성을 기준으로 정리했습니다.</p>
+      <div class="alley-grid">
+        <article class="alley"><span class="num">01</span><div><h3>농수산물·생선</h3><p>채소·과일·수산물 등 장보기 수요가 집중되는 생활형 구역입니다.</p></div></article>
+        <article class="alley"><span class="num">02</span><div><h3>건어물</h3><p>말린 해산물과 저장식품을 다루는 전통 도매·소매 성격의 거리입니다.</p></div></article>
+        <article class="alley"><span class="num">03</span><div><h3>한복·원단·생활직물</h3><p>혼수·한복·원단·봉제 관련 업종이 이어져 시장의 제작 문화를 보여 줍니다.</p></div></article>
+        <article class="alley"><span class="num">04</span><div><h3>공구·건축자재</h3><p>도심 생활시장과 산업·수리 기능이 함께 성장한 흔적을 읽을 수 있습니다.</p></div></article>
+        <article class="alley"><span class="num">05</span><div><h3>그릇·생활용품</h3><p>주방·혼수·가정용품을 다루는 점포군이 전통시장 특유의 집적을 이룹니다.</p></div></article>
+        <article class="alley"><span class="num">06</span><div><h3>먹자골목</h3><p>국밥·국수·분식·순대·튀김·간식류처럼 시장 방문 중 한 끼를 해결하는 음식 유형이 폭넓습니다.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="photo-band" aria-label="대전중앙시장 사진 기록">
+    <img src="/images/fabric-stall.jpg" alt="원단과 생활직물이 진열된 중앙시장 점포" width="1620" height="1080" loading="lazy" />
+    <div class="photo-stack">
+      <img src="/images/seafood.jpg" alt="중앙시장 수산물 진열 모습" width="1620" height="1080" loading="lazy" />
+      <img src="/images/noodle-alley.jpg" alt="시장 골목의 국수 안내가 적힌 오래된 점포 풍경" width="1620" height="1080" loading="lazy" />
+    </div>
+  </section>
+
+  <section class="section rule" id="food">
+    <div class="shell">
+      <p class="kicker">주변 먹거리</p>
+      <h2 class="section-title">상호보다 ‘시장 음식의 유형’을 보고 고르기</h2>
+      <p class="lede">비영리 정보 사이트의 중립성을 지키기 위해 특정 식당이나 점포를 추천하지 않습니다. 대신 중앙시장과 원도심에서 흔히 만날 수 있는 음식 유형과 선택할 때 확인할 점을 정리합니다.</p>
+      <div class="nearby-grid">
+        <article class="place"><small>든든한 한 끼</small><h3>국밥·국수·백반류</h3><p>시장 상권에서 오래 사랑받아 온 일상식 유형입니다. 메뉴 가격, 영업시간, 원산지 표시는 각 점포의 현장 안내를 확인하세요.</p></article>
+        <article class="place"><small>가볍게 맛보기</small><h3>분식·튀김·순대류</h3><p>여러 골목을 걷다가 간단히 먹기 좋은 유형입니다. 혼잡 시간에는 좌석이나 대기 여건이 달라질 수 있습니다.</p></article>
+        <article class="place"><small>장보기와 함께</small><h3>떡·반찬·즉석식품</h3><p>지역 주민의 일상 장보기와 여행자의 간식 수요가 겹치는 영역입니다. 보관·포장·알레르기 정보는 구매 전에 확인하세요.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="guide">
+    <div class="shell">
+      <p class="kicker">방문 실용정보</p>
+      <h2 class="section-title">가서 헤매지 않도록, 필요한 정보만 먼저</h2>
+      <p class="lede">중앙시장은 살아 있는 생활상권이므로 운영시간과 점포 구성은 고정된 박물관과 다릅니다. 아래 내용은 방문 계획을 세우는 기준이며, 요금·운영 여부가 중요한 항목은 현장 안내를 우선하세요.</p>
+      <div class="info-grid">
+        <article class="info-card"><div class="icon">₩</div><h3>입장료·비용</h3><p>시장 출입 자체는 무료입니다. 상품 구매, 음식·음료, 체험·행사 참여 비용은 각각 별도입니다. 가격은 점포별로 다릅니다.</p></article>
+        <article class="info-card"><div class="icon">시</div><h3>운영시간·휴무</h3><p>공식 관광 안내는 영업시간과 휴무일이 점포별로 다르다고 명시합니다. 특정 업종을 꼭 이용하려면 해당 점포의 최신 영업 여부를 확인하세요.</p></article>
+        <article class="info-card"><div class="icon">P</div><h3>주차</h3><p>시장 권역에 공영주차빌딩·주차타워 등 공영 주차시설이 안내되어 있습니다. 요금과 우대권 정책은 변동 가능하므로 입차 전 현장 요금표를 확인하세요.</p></article>
+        <article class="info-card"><div class="icon">화</div><h3>화장실·무장애</h3><p>한국관광공사 무장애 정보에는 장애인 화장실, 장애인 주차구역, 턱 없는 접근로, 경사로와 엘리베이터가 있는 것으로 안내됩니다.</p></article>
+        <article class="info-card"><div class="icon">식</div><h3>식사·간식</h3><p>한식 식사류, 국수·분식, 순대·튀김, 반찬·즉석식품, 떡·간식 등 여러 유형이 있습니다. 위생·알레르기·원산지 표시는 각 점포에서 확인하세요.</p></article>
+        <article class="info-card"><div class="icon">숙</div><h3>숙박</h3><p>대전역과 원도심 권역에는 비즈니스형 숙소·일반 숙박시설·소규모 여행자 숙소 유형이 분포합니다. 본 사이트는 특정 숙박업체를 추천하지 않습니다.</p></article>
+        <article class="info-card"><div class="icon">장</div><h3>장보기·편의시설</h3><p>시장 안팎에서 전통시장 점포, 편의점형 소매점, 생활잡화·식료품 판매시설을 찾을 수 있습니다. 늦은 시간에는 운영 여부가 달라질 수 있습니다.</p></article>
+        <article class="info-card"><div class="icon">⚡</div><h3>주유·전기차 충전</h3><p>대전역·동구 도심의 주유소와 공공·민간 전기차 충전시설을 이용할 수 있습니다. 충전기 상태·차종 호환·운영 여부는 출발 전 충전 지도에서 확인하세요.</p></article>
+        <article class="info-card"><div class="icon">1–3</div><h3>추천 방문 시간</h3><p>점포가 비교적 활발한 평일 늦은 오전~오후 초반이 시장 분위기를 보기 좋습니다. 시장만 1시간 30분~3시간, 원도심과 묶으면 반나절을 권합니다.</p></article>
+      </div>
+      <div class="notice">혼잡·행사·임시휴무, 주차요금, 교통편은 수시로 바뀔 수 있습니다. 본 사이트는 고정된 “최종 확인 시각”을 표시해 최신성을 과장하지 않으며, 중요한 이동·요금 정보는 출발 당일 공식 채널을 확인하도록 안내합니다.</div>
+    </div>
+  </section>
+
+  <section class="section rule" id="transport">
+    <div class="shell transport-wrap">
+      <div>
+        <p class="kicker">상세 교통</p>
+        <h2 class="section-title">기차·지하철부터 공항까지</h2>
+        <p class="lede">시장 주소는 대전광역시 동구 대전로 783입니다. 대전역과 매우 가까워 장거리 여행자가 철도에서 바로 도보 일정으로 연결하기 좋은 위치입니다.</p>
+        <div class="transport-list">
+          <article class="route"><div><h3>고속철도·일반철도</h3><p>대전역 하차 후 역 광장 맞은편 원도심 방향으로 이동합니다. 공식 관광 안내 기준으로 시장까지 도보 약 5~10분 범위입니다.</p></div></article>
+          <article class="route"><div><h3>지하철</h3><p>대전 도시철도 1호선 ‘대전역’에서 하차한 뒤 중앙시장 방향으로 도보 이동합니다. 철도 환승과 함께 쓰기 편한 접근 방식입니다.</p></div></article>
+          <article class="route"><div><h3>시내버스</h3><p>동구청은 급행 1번·2번과 대전역을 경유하는 시내버스를 안내합니다. 노선 개편 가능성이 있으므로 승차 전 대전시 버스정보에서 실시간 경로를 확인하세요.</p></div></article>
+          <article class="route"><div><h3>택시</h3><p>목적지를 ‘대전중앙시장, 동구 대전로 783’으로 전달하면 됩니다. 시장이 넓어 특정 골목이 목적이라면 하차 전 원하는 입구나 대전역 쪽 접근 여부를 기사에게 확인하는 것이 좋습니다.</p></div></article>
+          <article class="route"><div><h3>청주국제공항</h3><p>공항 공식 안내에는 대전복합터미널·대전유성터미널 방면 시외버스가 소개되어 있습니다. 대전 도착 후 시내버스 또는 택시로 대전역·중앙시장 권역을 연결할 수 있습니다. 항공·버스 시간표는 출발 당일 확인하세요.</p></div></article>
+          <article class="route"><div><h3>인천국제공항 등 수도권 공항</h3><p>철도 중심으로 계획한다면 공항철도로 서울역까지 이동한 뒤 고속철도로 대전역을 연결하는 방식이 이해하기 쉽습니다. 실제 환승 시간과 열차 좌석은 코레일·공항철도 최신 안내를 확인하세요.</p></div></article>
+        </div>
+      </div>
+      <div>
+        <div class="map-frame">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m5!3m3!1m2!1s0x356548dc15dd23c1%3A0xc8f190772eaa62da!2sDaejeon%20Jungang%20Market!5e1!3m2!1sko!2skr!4v1787535596258!5m2!1sko!2skr" width="600" height="520" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="대전중앙시장 구글 지도"></iframe>
+          <div class="map-meta"><span>대전광역시 동구 대전로 783</span><span>지도 언어: 한국어 · 지역: 대한민국</span></div>
+        </div>
+        <div class="notice"><strong>주차 메모:</strong> 동구청 공개 안내에는 시장 인근 공영주차빌딩과 주차타워 등이 제시되어 있습니다. 요금·무료시간·시장 이용 우대권은 정책이 바뀔 수 있어 오래된 온라인 게시물보다 현장 표지와 동구청 최신 주차 안내를 우선하세요.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section nearby" id="nearby">
+    <div class="shell">
+      <p class="kicker">주변 둘러보기</p>
+      <h2 class="section-title">시장만 보고 끝내기 아쉬운 대전 원도심</h2>
+      <p class="lede">대전중앙시장은 대전역과 대전천 사이의 원도심 여행 동선에 놓여 있습니다. 상업시설 추천 대신 역사·도시공간 중심으로 함께 보기 좋은 공공 명소를 소개합니다.</p>
+      <div class="nearby-grid">
+        <article class="place"><small>시장 인접</small><h3>목척교·대전천</h3><p>시장 서쪽의 대전천과 목척교는 원도심의 흐름을 읽기 좋은 공간입니다. 하천 복원과 교량 재정비를 거치며 야간 경관을 포함한 도심 랜드마크 역할을 해왔습니다.</p></article>
+        <article class="place"><small>대전역 동쪽 연계</small><h3>소제동 철도관사촌 일대</h3><p>철도도시 대전의 형성과 함께 만들어진 주거 흔적이 남은 지역입니다. 중앙시장의 ‘철도와 함께 성장한 도시’ 이야기를 공간적으로 이어 보기 좋습니다.</p></article>
+        <article class="place"><small>원도심 역사 산책</small><h3>옛 충남도청·근현대사 공간</h3><p>대전 원도심의 행정·근현대 역사를 살펴볼 수 있는 권역입니다. 시장의 생활사와 함께 도시가 확장된 과정을 비교해 보기 좋습니다.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section rule" id="faq">
+    <div class="shell">
+      <p class="kicker">방문 전 확인</p>
+      <h2 class="section-title">자주 묻는 질문</h2>
+      <div class="faq-list">
+        {faqs.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section sources" id="sources">
+    <div class="shell">
+      <p class="kicker">자료와 사진 출처</p>
+      <h2 class="section-title">광고가 아니라, 공개자료를 대조해 만든 안내</h2>
+      <p class="lede">이 사이트는 특정 상인의 홍보문구를 여행정보처럼 재사용하지 않습니다. 역사·교통·무장애·운영 정보는 아래 공공기관 자료를 우선해 서로 비교했습니다.</p>
+      <div class="source-grid">
+        <a class="source-link" href="https://www.donggu.go.kr/dg/tour/84/7/sights" rel="noopener noreferrer" target="_blank"><strong>대전광역시 동구청 · 중앙시장 관광안내</strong><span>주소, 교통, 주차, 시장 소개</span></a>
+        <a class="source-link" href="https://daejeontour.co.kr/find_djt/1" rel="noopener noreferrer" target="_blank"><strong>대전관광 · 중앙시장 구석구석</strong><span>형성 배경, 시장 규모, 현대화 과정, 원도심 맥락</span></a>
+        <a class="source-link" href="https://access.visitkorea.or.kr/ms/detail.do?cotId=a2600267-7dbf-42de-a4c8-2aa7168a225b" rel="noopener noreferrer" target="_blank"><strong>한국관광공사 · 열린관광 모두의 여행</strong><span>장애인 주차, 접근로, 경사로, 엘리베이터, 화장실</span></a>
+        <a class="source-link" href="https://www.airport.co.kr/cheongju/cms/frCon/index.do?MENU_ID=190" rel="noopener noreferrer" target="_blank"><strong>한국공항공사 · 청주국제공항 교통정보</strong><span>대전 방면 시외버스 등 공항 연계 기준</span></a>
+      </div>
+      <div class="notice"><strong>평점 데이터 안내:</strong> 검색엔진 구조화 데이터 요구사항을 충족하기 위해 외부 지도 서비스에 공개된 이용자 평점 표시값을 구조화 데이터에 포함했습니다. 평점은 수시로 변할 수 있으며 본문에서 품질 판단이나 상업적 추천의 근거로 사용하지 않습니다.</div>
+      <div class="notice"><strong>사진 이용조건:</strong> 본문 시장 사진은 대한민국역사박물관 현대사아카이브가 제공한 기록사진을 사용했으며, 위키미디어 공용에 ‘공공누리 제1유형(출처표시)’ 조건으로 공개된 파일을 로컬 저장해 사용했습니다. 원저작자·출처 표시는 삭제하지 않습니다.</div>
+    </div>
+  </section>
+</BaseLayout>

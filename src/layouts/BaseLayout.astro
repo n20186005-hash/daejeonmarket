@@ -1,0 +1,65 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CookieConsent from '../components/CookieConsent.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const { title, description, image = '/images/arcade.jpg', noindex = false } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+const absoluteImage = Astro.site ? new URL(image, Astro.site) : undefined;
+---
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#862f25" />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <title>{title}</title>
+    {canonical && <link rel="canonical" href={canonical.toString()} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical.toString()} />}
+    {absoluteImage && <meta property="og:image" content={absoluteImage.toString()} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <script is:inline>
+      (() => {
+        const key = 'djcm-cookie-preferences';
+        const id = 'G-HXM22WWPKP';
+        let prefs;
+        try { prefs = JSON.parse(localStorage.getItem(key) || 'null'); } catch { prefs = null; }
+        if (!prefs?.analytics) return;
+        const loader = document.createElement('script');
+        loader.async = true;
+        loader.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+        document.head.appendChild(loader);
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+        window.gtag('js', new Date());
+        window.gtag('config', id, { anonymize_ip: true, allow_google_signals: false, allow_ad_personalization_signals: false });
+      })();
+    </script>
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">본문 바로가기</a>
+    <Header />
+    <main id="content"><slot /></main>
+    <Footer />
+    <CookieConsent />
+  </body>
+</html>

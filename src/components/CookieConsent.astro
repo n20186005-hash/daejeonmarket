@@ -1,0 +1,24 @@
+<div class="cookie-banner" id="cookie-banner" role="region" aria-label="쿠키 동의 안내" data-open="false">
+  <p>필수 저장 기능 외의 분석 기능은 동의한 경우에만 사용합니다. 선택은 언제든 ‘쿠키 설정’에서 변경할 수 있습니다.</p>
+  <div class="cookie-actions">
+    <button class="btn btn-light" id="cookies-essential" type="button">필수만 사용</button>
+    <button class="btn btn-primary" id="cookies-accept" type="button">분석 허용</button>
+    <a class="btn" href="/cookies/">설정</a>
+  </div>
+</div>
+<script is:inline>
+  (() => {
+    const key = 'djcm-cookie-preferences';
+    const banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+    const existing = localStorage.getItem(key);
+    if (!existing) banner.setAttribute('data-open', 'true');
+    const save = (analytics, preferences) => {
+      localStorage.setItem(key, JSON.stringify({ necessary: true, analytics, preferences, marketing: false }));
+      banner.setAttribute('data-open', 'false');
+      if (analytics) window.location.reload();
+    };
+    document.getElementById('cookies-essential')?.addEventListener('click', () => save(false, false));
+    document.getElementById('cookies-accept')?.addEventListener('click', () => save(true, true));
+  })();
+</script>

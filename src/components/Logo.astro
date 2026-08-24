@@ -1,0 +1,7 @@
+---
+const { compact = false, inverted = false } = Astro.props;
+---
+<a class="brand" href="/" aria-label="대전중앙시장 여행안내 홈">
+  <img src={inverted ? "/icons/logo-mark-light.svg" : "/icons/logo-mark.svg"} alt="" width="44" height="44" />
+  {!compact && <span>대전중앙시장 여행안내</span>}
+</a>
