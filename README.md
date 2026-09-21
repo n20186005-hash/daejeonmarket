@@ -1,4 +1,4 @@
-# 대전중앙시장 여행안내
+# 대전중앙시장 대전 여행 안내
 
 대전중앙시장(대전광역시 동구 대전로 783)을 소개하는 독립 비영리 관광 정보 사이트입니다. Astro + Tailwind CSS + TypeScript로 정적 생성하며 Cloudflare Workers Static Assets로 배포합니다.
 

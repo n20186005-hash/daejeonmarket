@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const title = '쿠키 설정 | 대전중앙시장 여행안내';
+import { withSiteName } from '../data/site';
+const title = withSiteName('쿠키 설정');
 const description = '필수, 분석, 선호, 마케팅 관련 저장 기능의 선택을 관리할 수 있습니다.';
 ---
 <BaseLayout title={title} description={description}>

@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const title = '개인정보 처리방침 | 대전중앙시장 여행안내';
-const description = '대전중앙시장 여행안내 비영리 정보 사이트의 개인정보 처리방침입니다.';
+import { withSiteName } from '../data/site';
+const title = withSiteName('개인정보 처리방침');
+const description = '대전중앙시장 대전 여행 안내 비영리 정보 사이트의 개인정보 처리방침입니다.';
 ---
 <BaseLayout title={title} description={description}>
   <section class="legal-hero"><div class="shell"><p class="kicker">정책</p><h1 class="display">개인정보 처리방침</h1><p class="muted">마지막 업데이트: 2026년 8월</p></div></section>
   <section class="legal"><div class="shell"><article>
-    <p>대전중앙시장 여행안내는 독립적인 비영리 방문객 정보 프로젝트입니다. 서비스 제공에 필요한 범위 안에서 개인정보 수집을 최소화하며, 이용자의 선택권과 투명한 고지를 중요하게 다룹니다.</p>
+    <p>대전중앙시장 대전 여행 안내는 독립적인 비영리 방문객 정보 프로젝트입니다. 서비스 제공에 필요한 범위 안에서 개인정보 수집을 최소화하며, 이용자의 선택권과 투명한 고지를 중요하게 다룹니다.</p>
     <h2>1. 수집할 수 있는 정보</h2>
     <p>사이트 이용 과정에서 다음과 같은 최소한의 정보가 처리될 수 있습니다.</p>
     <ul><li>접속 기록, IP 주소, 브라우저·기기 종류, 방문 페이지 등 기본적인 이용 기록</li><li>쿠키 또는 브라우저 저장소에 보관되는 동의·환경 설정</li><li>이용자가 이메일 등 별도 연락 수단을 통해 자발적으로 제공한 정보</li></ul>

@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_NAME } from '../data/site';
 
-const title = '대전중앙시장 여행안내 | 대전역 앞 100년 시장을 읽는 비영리 가이드';
+const title = `${SITE_NAME} | 대전역 앞 100년 시장을 읽는 비영리 가이드`;
 const description = '대전중앙시장의 역사, 골목 구성, 교통, 주차, 무장애 시설, 먹거리 유형, 주변 명소와 방문 팁을 공공자료에 근거해 정리한 독립 비영리 여행 안내입니다.';
 const siteUrl = Astro.site?.toString().replace(/\/$/, '');
 const pageUrl = siteUrl ? `${siteUrl}/` : undefined;

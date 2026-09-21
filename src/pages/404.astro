@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withSiteName } from '../data/site';
 ---
-<BaseLayout title="페이지를 찾을 수 없습니다 | 대전중앙시장 여행안내" description="요청한 페이지를 찾을 수 없습니다." noindex={true}>
-  <section class="legal-hero"><div class="shell"><p class="kicker">404</p><h1 class="display">길을 잘못 든 것 같아요.</h1><p class="lede">시장 골목은 복잡해도 홈페이지는 다시 찾기 쉽습니다. <a href="/"><u>대전중앙시장 여행안내 첫 화면으로 돌아가기</u></a></p></div></section>
+<BaseLayout title={withSiteName('페이지를 찾을 수 없습니다')} description="요청한 페이지를 찾을 수 없습니다." noindex={true}>
+  <section class="legal-hero"><div class="shell"><p class="kicker">404</p><h1 class="display">길을 잘못 든 것 같아요.</h1><p class="lede">시장 골목은 복잡해도 홈페이지는 다시 찾기 쉽습니다. <a href="/"><u>대전중앙시장 대전 여행 안내 첫 화면으로 돌아가기</u></a></p></div></section>
 </BaseLayout>
