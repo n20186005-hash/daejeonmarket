@@ -22,3 +22,11 @@ raw=JSON.stringify({analytics:true});writable=true;storage.getItem=()=>raw;
 sessionStorage.getItem=()=>{throw Error('session blocked')};sessionStorage.setItem=()=>{throw Error('session blocked')};sessionStorage.removeItem=()=>{throw Error('session blocked')};
 p=page();assert.equal(p.scripts.length,1);writable=false;p.window.djcmConsent.save(false);writable=true;next=page(p.window.name);assert.equal(next.scripts.length,0);assert.equal(next.window['ga-disable-G-HXM22WWPKP'],true);
 console.log('PASS session-storage failure: window-name veto prevents stale-grant recovery in same tab.');
+// Banner controls remain usable when both reads and writes throw.
+const ui=Object.fromEntries(['cookie-banner','cookie-banner-status','cookies-essential','cookies-accept'].map(id=>[id,{attrs:{},handlers:{},setAttribute(k,v){this.attrs[k]=v},addEventListener(k,v){this.handlers[k]=v}}]));
+const scripts=[];const win={name:''};
+vm.runInNewContext(code,{window:win,document:{getElementById:id=>ui[id]||scripts.find(s=>s.id===id),createElement:()=>({}),head:{appendChild:s=>scripts.push(s)}},localStorage:{getItem(){throw Error('blocked')},setItem(){throw Error('blocked')},removeItem(){throw Error('blocked')}},sessionStorage});
+assert.equal(ui['cookie-banner'].attrs['data-open'],'true');
+ui['cookies-essential'].handlers.click();assert.equal(win['ga-disable-G-HXM22WWPKP'],true);assert.equal(scripts.length,0);assert.match(ui['cookie-banner-status'].textContent,/저장에 실패/);
+ui['cookies-accept'].handlers.click();assert.equal(scripts.length,1);assert.match(ui['cookie-banner-status'].textContent,/저장하지 못/);
+console.log('PASS banner storage exceptions: rejection disables immediately; explicit grant only; failure is visible.');
