@@ -248,3 +248,8 @@ details p { margin: 0; padding: 0 .15rem 1.5rem; max-width: 880px; color: rgba(3
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+.nav a,footer a,.menu-button,button,.btn,summary{min-height:44px}.nav a,footer a{display:inline-flex;align-items:center}
+.grid>*,.hero-bottom>*,.fact-grid>*,.cookie-banner>*{min-width:0}h1,h2,h3,p,a,dd{overflow-wrap:anywhere}
+.cookie-banner #cookie-banner-status:empty{display:none}
+@media(min-width:621px){.cookie-banner #cookie-banner-status:not(:empty){grid-column:1/-1}}
