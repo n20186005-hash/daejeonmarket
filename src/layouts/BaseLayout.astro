@@ -25,7 +25,7 @@ const absoluteImage = Astro.site ? new URL(image, Astro.site) : undefined;
     <meta name="theme-color" content="#862f25" />
     {noindex && <meta name="robots" content="noindex,follow" />}
     <title>{title}</title>
-    {canonical && <link rel="canonical" href={canonical.toString()} />}
+    {canonical && !noindex && <link rel="canonical" href={canonical.toString()} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ko_KR" />
     <meta property="og:title" content={title} />
@@ -38,23 +38,7 @@ const absoluteImage = Astro.site ? new URL(image, Astro.site) : undefined;
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
-    <script is:inline>
-      (() => {
-        const key = 'djcm-cookie-preferences';
-        const id = 'G-HXM22WWPKP';
-        let prefs;
-        try { prefs = JSON.parse(localStorage.getItem(key) || 'null'); } catch { prefs = null; }
-        if (!prefs?.analytics) return;
-        const loader = document.createElement('script');
-        loader.async = true;
-        loader.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
-        document.head.appendChild(loader);
-        window.dataLayer = window.dataLayer || [];
-        window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
-        window.gtag('js', new Date());
-        window.gtag('config', id, { anonymize_ip: true, allow_google_signals: false, allow_ad_personalization_signals: false });
-      })();
-    </script>
+    <script is:inline src="/consent.js" defer></script>
     <slot name="head" />
   </head>
   <body>

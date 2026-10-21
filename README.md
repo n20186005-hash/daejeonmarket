@@ -30,7 +30,7 @@ pnpm run audit
 pnpm run audit:language
 ```
 
-도메인이 아직 없으면 `astro.config.mjs`의 `site` 값은 비워 둡니다. 이 상태에서도 빌드는 정상 동작하며 canonical, 절대 Open Graph URL, sitemap은 생성하지 않습니다. 실제 도메인이 정해지면 `astro.config.mjs` 안의 `site` 한 곳만 설정하고 다시 빌드하세요.
+실제 기준 도메인은 https://daejeonmarket.com/ 입니다. `astro.config.mjs`의 site와 생성된 canonical·sitemap을 함께 유지하세요.
 
 ## Cloudflare Workers Static Assets
 
@@ -38,9 +38,10 @@ pnpm run audit:language
 
 ```jsonc
 {
-  "name": "daejeon-jungang-market-guide",
+  "name": "daejeonmarket",
+  "main": "worker.mjs",
   "compatibility_date": "2026-08-24",
-  "assets": { "directory": "./dist", "not_found_handling": "404-page" }
+  "assets": { "directory": "./dist", "binding": "ASSETS", "run_worker_first": true, "not_found_handling": "404-page" }
 }
 ```
 
@@ -85,3 +86,7 @@ grep -RInE 'example\\.com|localhost|chrome-extension://' dist && exit 1 || true
 ## 콘텐츠 검토
 
 전문 비영리 관광 랜딩페이지로서의 편집 원칙과 운영 단계 권고사항은 `CONTENT-REVIEW.md`에 정리했습니다.
+
+## Current validation
+
+Run `node scripts/behavior-test.mjs` for redirect, 404 and storage-failure consent behavior. `dist` remains untracked, matching the baseline; CI builds from committed sources and public assets. CONTENT-REVIEW.md records source dates and limitations. No deployment is implied by a local dry run.

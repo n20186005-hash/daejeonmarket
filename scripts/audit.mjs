@@ -34,7 +34,7 @@ if (wrangler.assets.directory !== './dist') fail('assets.directory는 루트 기
 const workspace = path.join(root, 'pnpm-workspace.yaml');
 if (fs.existsSync(workspace)) {
   const text = fs.readFileSync(workspace, 'utf8');
-  if (!/packages\s*:\s*[\s\S]*['"]\.['"]/.test(text)) fail('pnpm-workspace.yaml packages에 현재 패키지가 없습니다.');
+  if (/^packages\s*:/m.test(text) && !/packages\s*:\s*[\s\S]*['"]\.['"]/.test(text)) fail('pnpm-workspace.yaml packages에 현재 패키지가 없습니다.');
 }
 
 const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {

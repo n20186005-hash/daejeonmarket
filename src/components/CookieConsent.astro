@@ -5,20 +5,5 @@
     <button class="btn btn-primary" id="cookies-accept" type="button">분석 허용</button>
     <a class="btn" href="/cookies/">설정</a>
   </div>
+  <p id="cookie-banner-status" role="status" aria-live="polite"></p>
 </div>
-<script is:inline>
-  (() => {
-    const key = 'djcm-cookie-preferences';
-    const banner = document.getElementById('cookie-banner');
-    if (!banner) return;
-    const existing = localStorage.getItem(key);
-    if (!existing) banner.setAttribute('data-open', 'true');
-    const save = (analytics, preferences) => {
-      localStorage.setItem(key, JSON.stringify({ necessary: true, analytics, preferences, marketing: false }));
-      banner.setAttribute('data-open', 'false');
-      if (analytics) window.location.reload();
-    };
-    document.getElementById('cookies-essential')?.addEventListener('click', () => save(false, false));
-    document.getElementById('cookies-accept')?.addEventListener('click', () => save(true, true));
-  })();
-</script>
