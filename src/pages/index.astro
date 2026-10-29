@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import TopicLinks from '../components/TopicLinks.astro';
 import { SITE_NAME } from '../data/site';
 
-const title = `${SITE_NAME} | 위치·점포별 영업시간·야시장 확인`;
-const description = '대전 중앙시장의 위치와 여러 시장 구역, 점포별 영업시간, 과거 야시장 행사와 현재 운영의 차이, 교통·주차 확인 사항을 정리한 독립 한국어 가이드입니다.';
+const title = `${SITE_NAME} | 위치·점포별 영업시간·2026 행사·야시장 확인`;
+const description = '대전 중앙시장의 위치와 여러 시장 구역, 점포별 영업시간, 2026 토토즐 푸드페스타 등 행사와 현재 운영의 차이, 교통·주차 확인 사항을 정리한 독립 한국어 가이드입니다.';
 const siteUrl = Astro.site?.toString().replace(/\/$/, '');
 const pageUrl = siteUrl ? `${siteUrl}/` : undefined;
 const imageUrl = siteUrl ? `${siteUrl}/images/arcade.jpg` : undefined;
@@ -198,6 +199,8 @@ const faqLd = {
     </div>
   </section>
 
+  <TopicLinks />
+
   <section class="section rule" id="faq">
     <div class="shell">
       <p class="kicker">방문 전 확인</p>
@@ -213,7 +216,7 @@ const faqLd = {
       <p class="kicker">자료와 사진 출처</p>
       <h2 class="section-title">광고가 아니라, 공개자료를 대조해 만든 안내</h2>
       <p class="lede">이 사이트는 특정 상인의 홍보문구를 여행정보처럼 재사용하지 않습니다. 역사·교통·무장애·운영 정보는 아래 공공기관 자료를 우선해 서로 비교했습니다.</p>
-      <div class="notice"><strong>지도 확인 기록:</strong> 2026년 10월 20일 구글 지도는 대전중앙시장 평점 4.2·후기 6,240개, 주소 대전로 783, 전화 042-226-0319를 표시했습니다. 전화는 통화 확인하지 않은 목록 정보입니다. 좌표 36.3295329, 127.4331895는 위치 참고용이며 특정 출입구를 뜻하지 않습니다. 무장애 입구 표시는 전체 이동 경로의 접근성 확인을 대신하지 않습니다.</div>
+      <div class="notice"><strong>지도 확인 기록:</strong> 2026년 10월 20일 구글 지도는 대전중앙시장 평점 4.2·후기 6,244개, 주소 대전로 783, 전화 042-226-0319를 표시했습니다. 전화는 통화 확인하지 않은 목록 정보입니다. 좌표 36.3295329, 127.4331895는 위치 참고용이며 특정 출입구를 뜻하지 않습니다. 무장애 입구 표시는 전체 이동 경로의 접근성 확인을 대신하지 않습니다.</div>
       <div class="source-grid">
         <a class="source-link" href="https://maps.app.goo.gl/pQKQeiP4Y77hLw5u5" rel="noopener noreferrer" target="_blank"><strong>구글 지도 · 대전중앙시장</strong><span>2026년 10월 20일 확인한 목록 · 방문일에 다시 확인</span></a>
         <a class="source-link" href="https://www.donggu.go.kr/dg/tour/84/7/sights" rel="noopener noreferrer" target="_blank"><strong>대전광역시 동구청 · 중앙시장 관광안내</strong><span>주소, 교통, 주차, 시장 소개</span></a>

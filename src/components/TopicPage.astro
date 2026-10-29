@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { MARKET, TOPIC_GROUP_LABELS, getTopic } from '../data/topics';
+import { withSiteName } from '../data/site';
+import type { Topic } from '../data/topics';
+
+interface Props {
+  topic: Topic;
+}
+
+const { topic } = Astro.props;
+
+const title = topic.metaTitle || withSiteName(topic.h1);
+const description = topic.metaDescription;
+const canonicalPath = `/${topic.slug}/`;
+const siteUrl = Astro.site?.toString().replace(/\/$/, '');
+const pageUrl = siteUrl ? `${siteUrl}${canonicalPath}` : undefined;
+const groupLabel = TOPIC_GROUP_LABELS[topic.group];
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: '홈',
+      item: siteUrl ? `${siteUrl}/` : '/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: groupLabel,
+      item: pageUrl,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: topic.h1,
+      item: pageUrl,
+    },
+  ],
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: topic.faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const webPageLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: topic.h1,
+  description,
+  ...(pageUrl ? { url: pageUrl } : {}),
+  ...(siteUrl
+    ? {
+        about: {
+          '@type': 'TouristAttraction',
+          '@id': `${siteUrl}/#attraction`,
+          name: MARKET.name,
+        },
+      }
+    : {}),
+  lastReviewed: topic.updated,
+};
+
+const relatedTopics = topic.related
+  .map((s) => getTopic(s))
+  .filter((t): t is Topic => Boolean(t));
+---
+
+<BaseLayout title={title} description={description} image={topic.image}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(webPageLd)}></script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)}></script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(faqLd)}></script>
+  </Fragment>
+
+  <section class="topic-hero">
+    <img src={topic.image} alt={`${topic.h1} 안내 이미지`} width="1620" height="1080" />
+    <div class="shell topic-hero-content">
+      <p class="kicker">{topic.kicker}</p>
+      <h1 class="display">{topic.h1}</h1>
+    </div>
+  </section>
+
+  <section class="section topic-intro">
+    <div class="shell">
+      <p class="lede">{topic.lead}</p>
+      {
+        topic.sections.map((sec) => (
+          <div class="topic-section">
+            {sec.id ? <h2 class="section-title" id={sec.id}>{sec.heading}</h2> : <h2 class="section-title">{sec.heading}</h2>}
+            {sec.paragraphs?.map((p) => <p>{p}</p>)}
+            {sec.bullets && (
+              <ul class="topic-bullets">
+                {sec.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+            )}
+            {sec.callout && <div class="notice">{sec.callout}</div>}
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {
+    relatedTopics.length > 0 && (
+      <section class="section rule topic-related">
+        <div class="shell">
+          <p class="kicker">함께 보기</p>
+          <h2 class="section-title">관련 안내 모아보기</h2>
+          <div class="nearby-grid">
+            {relatedTopics.map((t) => (
+              <a class="place" href={`/${t.slug}/`}>
+                <small>{TOPIC_GROUP_LABELS[t.group]}</small>
+                <h3>{t.h1}</h3>
+                <p>{t.lead}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section sources topic-faq">
+    <div class="shell">
+      <p class="kicker">자주 묻는 질문</p>
+      <h2 class="section-title">{topic.h1} 관련 질문</h2>
+      <div class="faq-list">
+        {topic.faqs.map((f) => (
+          <details><summary>{f.q}</summary><p>{f.a}</p></details>
+        ))}
+      </div>
+      <div class="notice">
+        이 안내는 2026년 10월 20일 기준 공공자료를 정리한 것입니다. 방문일의 점포 영업·시설·행사 상태는 현장에서 다시 확인하세요.
+      </div>
+    </div>
+  </section>
+</BaseLayout>

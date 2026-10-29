@@ -1,0 +1,22 @@
+---
+import TopicPage from '../components/TopicPage.astro';
+import { topicSlugs, getTopic } from '../data/topics';
+import type { Topic } from '../data/topics';
+
+export const dynamicParams = false;
+
+export function getStaticPaths() {
+  return topicSlugs().map((slug) => ({
+    params: { slug },
+    props: { topic: getTopic(slug) as Topic },
+  }));
+}
+
+interface Props {
+  topic: Topic;
+}
+
+const { topic } = Astro.props;
+---
+
+<TopicPage topic={topic} />

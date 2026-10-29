@@ -8,7 +8,17 @@ const site = 'https://daejeonmarket.com';
 export default defineConfig({
   site: site || undefined,
   output: 'static',
-  integrations: site ? [sitemap()] : [],
+  integrations: site
+  ? [
+      sitemap({
+        filter: (page) => {
+          // @astrojs/sitemap 把 filter 的 page 传为完整 URL，先去掉 origin 再判断路径。
+          const path = page.replace(/^https?:\/\/[^/]+/, '');
+          return !/^\/(privacy|terms|cookies)\/?$/.test(path) && path !== '/404';
+        },
+      }),
+    ]
+  : [],
   vite: {
     plugins: [tailwindcss()],
   },

@@ -1,0 +1,30 @@
+---
+import { topicsByGroup, TOPIC_GROUP_ORDER, TOPIC_GROUP_LABELS } from '../data/topics';
+const grouped = topicsByGroup();
+---
+
+<section class="section topic-links" id="guides">
+  <div class="shell">
+    <p class="kicker">주제별 안내</p>
+    <h2 class="section-title">골목·교통·먹거리, 하나씩 깊이 보기</h2>
+    <p class="lede">
+      대전중앙시장을 주제별로 나눠 정리한 안내입니다. 궁금한 항목을 골라 보세요. 확인일은 2026년 10월 20일이며,
+      점포 영업·시설·행사 상태는 방문일에 현장에서 다시 확인하세요.
+    </p>
+    {
+      TOPIC_GROUP_ORDER.map((g) => (
+        <div class="guide-group">
+          <h3 class="guide-group-title">{TOPIC_GROUP_LABELS[g]}</h3>
+          <div class="guide-grid">
+            {grouped[g].map((t) => (
+              <a class="guide-card" href={`/${t.slug}/`}>
+                <small>{t.kicker}</small>
+                <h4>{t.h1}</h4>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
